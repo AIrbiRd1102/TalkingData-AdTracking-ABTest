@@ -1,0 +1,63 @@
+# Kaggle 账号凭据，切勿提交
+.kaggle/
+kaggle.json
+
+# 含本机路径的本地配置，切勿提交（所需配置见 README §5.1，自行创建 配置.py）
+scripts/配置.py
+scripts/config_local.py
+/config.py
+
+# 大数据文件（CSV / 中间产物）
+# data/ 根下的 *.json 是各步骤结论产物，需随仓库交付；故只忽略中间文件与明细
+data/prepared/
+data/details/
+results_subset_backup/
+data/prepared_subset_backup/
+data/prepared_full_backup/
+*.parquet
+__pycache__/
+*.pyc
+
+# 运行日志
+*.log
+logs/
+
+# Windows 快捷方式
+*.lnk
+
+# 系统与编辑器垃圾
+*.tmp
+*.bak
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 图表产物（体积大且可重新生成；如需交付请显式 git add -f）
+figures/
+
+# 虚拟环境
+.venv/
+venv/
+
+# Tableau 本地缓存（工作簿本身可单独管理）
+*.twb
+
+# docs 仅对外展示【最新汇总报告】，其余文档本地保留、不随仓库分发
+# （换了新报告后，把下面 ! 那行的日期改成新文件名即可）
+docs/RESUME.html
+docs/技术手册.html
+docs/通用教程_ab-test-guide.html
+docs/面试QA手册.html
+docs/重构改动日志_*.md
+docs/AB测试汇总报告_*.html
+!docs/AB测试汇总报告_2026-10-13.html
+
+# AI 助手记忆目录（含个人讨论记录与项目分析过程），切勿提交
+.workbuddy/
+
+# 历史备份 / 重构前快照（含过期文档与旧数据）
+archive/
+
+# IDE 配置
+.idea/
+.vscode/

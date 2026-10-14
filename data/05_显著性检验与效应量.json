@@ -1,0 +1,18 @@
+{
+  "control_n": 158175,
+  "control_conv": 2363,
+  "control_rate": 0.01493914967599178,
+  "treatment_n": 138534,
+  "treatment_conv": 6488,
+  "treatment_rate": 0.04683326836733221,
+  "abs_lift": 0.03189411869134043,
+  "relative_lift": 2.134935346594487,
+  "z_stat": 50.94924496763628,
+  "p_value": 0.0,
+  "cohens_h": 0.19120714695982172,
+  "ci95_low": 0.03063109448947358,
+  "ci95_high": 0.03315714289320727,
+  "significant": true,
+  "achieved_power": 1.0,
+  "power_note": "achieved_power 按【等臂近似】计算（nobs1=min(n_c,n_t), ratio=1.0）；真实两组不等臂，严格写法应传 ratio=n_t/n_c（本项目两者均≈1.0）"
+}

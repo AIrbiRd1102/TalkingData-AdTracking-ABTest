@@ -1,0 +1,18 @@
+# A/B 测试方法学演练项目 —— Python 依赖（conda 环境 data_analysis_env，Python 3.12）
+# 安装：conda activate data_analysis_env && pip install -r requirements.txt
+# 注：全量直读（ABTEST_DATA_SOURCE=full_csv）还需系统级 JDK 25 + Spark 4.2 + Hadoop 3.3.x + winutils，
+#     这些不是 pip 包，需另行安装并配置 JAVA_HOME / HADOOP_HOME（详见 README §5.1）。
+
+# —— 计算与存储 ——
+pyspark>=4.0            # 全量 full_csv 直读必需
+pandas>=2.0
+numpy>=1.24
+pyarrow>=12.0           # pandas to_parquet 读写中间面板（data/prepared/）
+
+# —— 统计与机器学习 ——
+scipy>=1.10             # Z 检验 / 正态 / SRM 卡方
+statsmodels>=0.14       # OLS / 比例检验 / 功效
+scikit-learn>=1.3       # 逻辑回归倾向得分、IPW/DID/E-value 相关工具
+
+# —— 可视化 ——
+matplotlib>=3.7         # 兜底图（dashboard / validity / monitoring / causal_inference）

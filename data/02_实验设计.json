@@ -1,0 +1,76 @@
+{
+  "planning_inputs": {
+    "alpha": 0.05,
+    "power": 0.8,
+    "assumed_baseline_rate": 0.002,
+    "target_mde_relative": 0.1,
+    "assumed_daily_traffic": 200000,
+    "note": "以上均来自 ① 规划假设，未使用真实转化率（设计优先）"
+  },
+  "sample_size": {
+    "target_mde_relative": 0.1,
+    "p0": 0.002,
+    "p1": 0.0022,
+    "cohens_h": 0.004370185471290353,
+    "n_per_group_required": 821934,
+    "n_total_required": 1643868,
+    "n_per_group_by_lift": {
+      "5%": 3210959,
+      "10%": 821934,
+      "15%": 373740,
+      "20%": 214924,
+      "30%": 99634,
+      "50%": 38752,
+      "80%": 16766,
+      "100%": 11403,
+      "126%": 7721
+    }
+  },
+  "allocation_and_duration": [
+    {
+      "allocation": "50/50 (2 臂)",
+      "treatment_share": 0.5,
+      "treatment_per_day": 100000,
+      "days_for_target_mde": 8.2,
+      "weeks_rounded": 2
+    },
+    {
+      "allocation": "33/33/33 (3 臂)",
+      "treatment_share": 0.3333333333333333,
+      "treatment_per_day": 66666,
+      "days_for_target_mde": 12.3,
+      "weeks_rounded": 2
+    },
+    {
+      "allocation": "25/25/25/25 (4 臂)",
+      "treatment_share": 0.25,
+      "treatment_per_day": 50000,
+      "days_for_target_mde": 16.4,
+      "weeks_rounded": 3
+    },
+    {
+      "allocation": "90/10 (小流量灰度)",
+      "treatment_share": 0.1,
+      "treatment_per_day": 20000,
+      "days_for_target_mde": 41.1,
+      "weeks_rounded": 6
+    }
+  ],
+  "randomization_scheme": {
+    "method": "deterministic_hash",
+    "salt": "exp_abtest_main_v1",
+    "n_buckets": 100,
+    "split_a_fraction": 0.5,
+    "demo_A_share": 0.52
+  },
+  "pre_registration": {
+    "primary_test": "两比例 Z 检验（two-sided），α=0.05",
+    "effect_size": "Cohen's h + 相对/绝对提升 + 95% CI",
+    "peeking_policy": "固定节奏偷看 + O'Brien-Fleming α 消耗边界（见 ⑥），禁止 naive z>1.96 反复偷看",
+    "outlier_policy": "用户级 (ip,app) 去重；converted=max(is_attributed)；不删异常转化",
+    "covariate_adjustment": "不使用 CUPED：其协变量须为 pre-period 且不受处理影响，本数据集无窗口前行为记录（n_clicks 为同期变量，会调掉处理效应）",
+    "validity_gate": "④ SRM/协变量均衡 不通过则结论作废（A/A 为流程自检，不构成数据闸门）"
+  },
+  "control_app": 12,
+  "treatment_app": 18
+}

@@ -1,0 +1,51 @@
+{
+  "business_goal": "评估把广告点击后激活/安装（is_attributed=1）的转化率，从对照组 app12 切到实验组 app18，是否能带来统计显著且业务可接受的提升。",
+  "primary_metric": {
+    "name": "conversion_rate",
+    "definition": "用户级 (ip,app) 去重后，converted = MAX(is_attributed)（是否曾转化） / n_users",
+    "direction": "higher_is_better",
+    "rationale": "直接反映广告投放的变现效率，是本次实验的成败判定依据",
+    "alias": "OEC",
+    "oec_note": "本项目的 OEC（Overall Evaluation Criterion，总体评估标准）即此主指标：唯一决定实验成败的判定指标；护栏指标为保护体验的辅助指标，不构成 OEC。"
+  },
+  "guardrail_metrics": [
+    {
+      "name": "n_clicks_per_user",
+      "definition": "人均点击次数（用户级）",
+      "direction": "non_inferior",
+      "margin": 0.05,
+      "rationale": "防止新 app 提升转化的同时损害了用户互动/体验（护栏：不能显著变差）"
+    }
+  ],
+  "secondary_metrics": [
+    {
+      "name": "activation_latency",
+      "definition": "点击到激活的时延（若有埋点）",
+      "direction": "lower_is_better",
+      "rationale": "辅助观察体验侧影响，不作为主判定"
+    }
+  ],
+  "hypothesis": {
+    "H0": "p_treatment - p_control = 0  （app 切换不改变转化率）",
+    "H1": "p_treatment - p_control != 0  （双侧：可能变好也可能变差）",
+    "alternative": "two-sided",
+    "note": "业务真正关心的是'是否变好'，但用双侧可同时捕捉'变差'（安全/护栏）；若只看提升也可改 one-sided(>0)，此处选双侧更稳健。"
+  },
+  "planning_assumptions": {
+    "alpha": 0.05,
+    "power": 0.8,
+    "assumed_baseline_rate": 0.002,
+    "target_mde_relative": 0.1,
+    "assumed_daily_traffic": 200000,
+    "guardrail_margin": 0.05,
+    "warning": "以上 baseline / traffic 均为规划假设值（领域经验或历史试点），非本实验观测值；步骤②只用这些值算样本量，绝不偷看真实转化。"
+  },
+  "decision_rule": {
+    "ship_if": "主指标 Z 检验 p<α 且相对提升 ≥ 目标 MDE 且 护栏指标单侧劣效通过（未劣于容差）",
+    "no_ship_if": "主指标 p≥α，或提升 < 目标 MDE，或护栏被击穿（n_clicks 显著变差）",
+    "iterate_if": "方向为正但不显著（功效不足）→ 延长周期/扩流量重测，而非直接下结论",
+    "validity_gate": "步骤④ SRM/协变量均衡 任一不通过 → 分流无效，结论不可信，先修分流（A/A 为流程自检，不构成数据有效性闸门）"
+  },
+  "control_app": 12,
+  "treatment_app": 18
+}

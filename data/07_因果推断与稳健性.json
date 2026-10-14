@@ -1,0 +1,142 @@
+{
+  "data": {
+    "unit": "(ip, app)",
+    "n_units": 296709,
+    "n_control": 158175,
+    "n_treatment": 138534,
+    "control_rate": 0.01493914967599178,
+    "treatment_rate": 0.04683326836733221
+  },
+  "sutva_overlap": {
+    "unique_ips": 172118,
+    "ips_in_both_apps": 124591,
+    "ips_in_one_app": 47527,
+    "overlap_rate": 0.7238696708072369,
+    "overlap_rate_unit": 0.8398194864328349,
+    "naive_diff_single_app_subsample": 0.010410983591158954,
+    "control_rate_single_app": 0.011463792282039066,
+    "treatment_rate_single_app": 0.02187477587319802,
+    "n_single_app_control": 33584,
+    "n_single_app_treatment": 13943
+  },
+  "ps_model": {
+    "cv_auc": 0.9893664050723805,
+    "brier": 0.03576895882722397,
+    "common_support": [
+      0.22443923054751355,
+      0.7611545402346119
+    ],
+    "on_support_share": 0.16148819213438081
+  },
+  "ps_feature_info": {
+    "n_features": 50,
+    "n_rows": 296709,
+    "top_k": {
+      "os": 10,
+      "device": 6,
+      "channel": 8
+    },
+    "coverage": {
+      "os": 0.8163621595570071,
+      "device": 1.0,
+      "channel": 0.8357650088133491
+    }
+  },
+  "estimates": [
+    {
+      "method": "Naive difference",
+      "estimate_risk_diff": 0.03189411869134043,
+      "se": 0.0006444119442139859,
+      "ci_low": 0.030631071280681016,
+      "ci_high": 0.03315716610199984,
+      "z": 49.493369850931174,
+      "p_value": 0.0,
+      "relative_lift_vs_control": 2.134935346594487,
+      "note": "未调整，含选择偏差",
+      "se_type": "解析式（非合并 SE）",
+      "baseline_used_for_relative_lift": 0.01493914967599178
+    },
+    {
+      "method": "IPW (ATT, trimmed 1/99)",
+      "estimate_risk_diff": 0.03456851796780954,
+      "se": 0.0008137136653949442,
+      "ci_low": 0.03297363918363545,
+      "ci_high": 0.03616339675198363,
+      "z": 42.48241050619613,
+      "p_value": 0.0,
+      "relative_lift_vs_control": 2.313954858044128,
+      "note": "bootstrap SE（未含 PS 估计与截断点的不确定性）",
+      "se_type": "bootstrap 400 次（仅行重抽样，权重固定）",
+      "baseline_used_for_relative_lift": 0.01493914967599178
+    },
+    {
+      "method": "DID (pseudo shock @18:00)",
+      "estimate_risk_diff": -0.0015565878310689057,
+      "se": 0.00010359048659955022,
+      "ci_low": -0.001759625184804024,
+      "ci_high": -0.0013535504773337873,
+      "z": -15.026358907707499,
+      "p_value": 0.0,
+      "relative_lift_vs_control": -0.41826845641851257,
+      "note": "方法演示，cluster SE（按 (ip,app) 聚类）；相对基线分母=实验组基期行级率",
+      "se_type": "cluster-robust（按 (ip,app) 聚类）",
+      "baseline_used_for_relative_lift": 0.003721504232945095
+    }
+  ],
+  "psm": {
+    "n_pairs": 5513,
+    "caliper": 1.887473527316567,
+    "treated_matched_rate": 0.03979528491200716,
+    "control_used_rate": 0.034853801169590644,
+    "common_support": [
+      0.22443923054751355,
+      0.7611545402346119
+    ],
+    "smd_max_before": 4.708738287964058,
+    "smd_max_after": 0.04376049193038744
+  },
+  "did": {
+    "disclaimer": "方法演示：无真实政策冲击，虚拟干预时点=18:00",
+    "pseudo_post_start_hour": 18,
+    "did_2x2_manual": -0.0015565878310702145,
+    "did_coef": -0.0015565878310689057,
+    "did_se": 0.00010359048659955022,
+    "did_p": 4.933904152019146e-51,
+    "did_se_type": "cluster((ip,app))",
+    "did_se_hc1_for_reference": 0.00010201912086231888,
+    "did_baseline_for_relative_lift": 0.003721504232945095,
+    "did_baseline_meaning": "实验组基期(post=0)行级转化率（ATT 相对化的分母）",
+    "placebo_pseudo_shock_hour": 1,
+    "placebo_coef": 0.0005348539512142413,
+    "placebo_p": 0.012468827930174564,
+    "placebo_note": "伪干预设在 1:00；观测统计量与置换分布使用同一段数据（hour ∈ [0, 18)）与同一套切分，已修正此前'观测 2 小时 / 置换 18 小时'的错配",
+    "parallel_trend_supported": false
+  },
+  "e_value": [
+    {
+      "method": "Naive difference",
+      "risk_ratio": 3.134935346594487,
+      "e_value": 5.721996281464984
+    },
+    {
+      "method": "IPW (ATT, trimmed 1/99)",
+      "risk_ratio": 3.313954858044128,
+      "e_value": 6.083131981868126
+    },
+    {
+      "method": "DID (pseudo shock @18:00)",
+      "risk_ratio": 0.8958047904446363,
+      "e_value": null
+    }
+  ],
+  "recommended_headline": {
+    "finding": "朴素相对提升 +213.5% 经 IPW 调整 device/OS/channel/hour 后不减反增、升至 +231.4%（净增量 +3.1894pp → +3.4569pp，仍显著），说明可观测混杂未削弱、反而放大了表观关联（约 8% 的放大）",
+    "adjuster_methods": {
+      "IPW (ATT, trimmed 1/99)": 0.03456851796780954
+    },
+    "psm_feasible": false,
+    "psm_reason": "实验组仅 3.98% 被匹配（匹配 5,513 对，门槛 50%）",
+    "interpretation": "控制 device/OS/channel 后关联不降反升，表明朴素估计其实低估了表观关联；两组特征分布差异会『掩盖』而非『制造』差异，叠加 SUTVA 违反，更不可断言为 app 本身的处理效应",
+    "hard_limit": "SUTVA 违反（ip 重叠 72.4%）+ 重叠不足，本数据【无法】做严格因果识别；结论须限定为'可观测混杂调整后的关联'，不可声称因果净增量"
+  }
+}

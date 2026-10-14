@@ -1,0 +1,40 @@
+{
+  "real_split_srm": {
+    "control_n": 158175,
+    "treatment_n": 138534,
+    "control_share": 0.533098086003458,
+    "treatment_share": 0.4669019139965421,
+    "chi2": 1300.1590143878345,
+    "p": 1.0439162574160276e-284,
+    "srm_failed": true
+  },
+  "hash_scheme_quality": {
+    "n_ips": 172118,
+    "n_buckets": 100,
+    "determinism_ok": true,
+    "uniformity_p": 0.023356288751398713,
+    "scheme_srm_p": 0.27381645646035757,
+    "orthogonality_p": 0.9054123254223236,
+    "scheme_A": 86286,
+    "scheme_B": 85832
+  },
+  "covariate_balance": {
+    "max_gap": {
+      "os": 0.020465138907003452,
+      "device": 0.02071645536954832,
+      "channel": 0.7030043166298526
+    },
+    "balanced": false
+  },
+  "aa_test": {
+    "p": 0.04440895612542666,
+    "ok": false
+  },
+  "validity_gate": {
+    "scheme_ok": false,
+    "split_valid": false,
+    "causal_interpretable": false
+  },
+  "control_app": 12,
+  "treatment_app": 18
+}

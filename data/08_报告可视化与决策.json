@@ -1,0 +1,62 @@
+{
+  "meta": {
+    "data_source": "full_csv",
+    "unit": "(ip, app) 用户级 / (ip, app, hour) 用户-小时级",
+    "generated_by": "运行全流程.py（平铺大步骤管道，设计优先）"
+  },
+  "experiment_design_and_test": {
+    "control_app": 12,
+    "treatment_app": 18,
+    "control_rate": 0.01493914967599178,
+    "treatment_rate": 0.04683326836733221,
+    "relative_lift": 2.134935346594487,
+    "z_stat": 50.94924496763628,
+    "p_value": 0.0,
+    "cohens_h": 0.19120714695982172,
+    "ci95": [
+      0.03063109448947358,
+      0.03315714289320727
+    ],
+    "significant": true,
+    "achieved_power": 1.0,
+    "target_mde_relative": 0.1,
+    "n_per_group_required": 821934
+  },
+  "validity_gate": {
+    "real_split_srm_failed": true,
+    "covariate_balanced": false,
+    "aa_p": 0.04440895612542666,
+    "causal_interpretable": false
+  },
+  "monitoring": {
+    "peeking_fpr_naive": 0.1515,
+    "peeking_fpr_obf": 0.04425,
+    "guardrail_pass": false,
+    "guardrail_verdict": "inferior",
+    "guardrail_verdict_cn": "劣效（护栏击穿）"
+  },
+  "causal_inference": {
+    "sutva_overlap_rate": 0.7238696708072369,
+    "psm_feasible": false,
+    "headline_finding": "朴素相对提升 +213.5% 经 IPW 调整 device/OS/channel/hour 后不减反增、升至 +231.4%（净增量 +3.1894pp → +3.4569pp，仍显著），说明可观测混杂未削弱、反而放大了表观关联（约 8% 的放大）",
+    "hard_limit": "SUTVA 违反（ip 重叠 72.4%）+ 重叠不足，本数据【无法】做严格因果识别；结论须限定为'可观测混杂调整后的关联'，不可声称因果净增量",
+    "estimates": [
+      {
+        "method": "Naive difference",
+        "net_lift_pp": 3.1894118691340427,
+        "p_value": 0.0
+      },
+      {
+        "method": "IPW (ATT, trimmed 1/99)",
+        "net_lift_pp": 3.456851796780954,
+        "p_value": 0.0
+      },
+      {
+        "method": "DID (pseudo shock @18:00)",
+        "net_lift_pp": -0.15565878310689057,
+        "p_value": 0.0
+      }
+    ]
+  },
+  "decision": "不采纳为因果结论（实验结论限定为关联）：主指标显著但护栏被击穿（体验指标显著变差）；同时存在：分流非随机（SRM 失败/协变量失衡）"
+}
